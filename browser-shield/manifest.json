@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "ORION Browser Shield",
+  "version": "2.0.0",
+  "description": "AI-Powered Phishing, Impersonation & Malicious Domain Shield for ORION Cyber Defence Platform.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "http://127.0.0.1:8000/*"
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/config.js", "src/content/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "ORION Browser Shield"
+  }
+}

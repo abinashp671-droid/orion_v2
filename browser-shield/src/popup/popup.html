@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORION Browser Shield</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="shield-container">
+    <!-- Header -->
+    <header class="shield-header">
+      <div class="logo-group">
+        <span class="shield-glyph">🛡️</span>
+        <div class="logo-text">
+          <span class="brand-title">ORION</span>
+          <span class="brand-sub">Browser Shield</span>
+        </div>
+      </div>
+      <div id="protection-pill" class="protection-pill pill-protected">
+        <span class="dot"></span>
+        <span id="protection-pill-text">Protected</span>
+      </div>
+    </header>
+
+    <!-- Current Site Card -->
+    <section class="site-card">
+      <div class="site-label">CURRENT WEBSITE</div>
+      <div id="hostname-text" class="site-hostname" title="Current Hostname">Loading...</div>
+      <div id="page-title-text" class="site-title" style="display: none;"></div>
+    </section>
+
+    <!-- Dynamic Status State Container -->
+    <main id="state-container" class="state-container">
+      <!-- STATE 2: ANALYZING (Default before load) -->
+      <div id="state-analyzing" class="state-view">
+        <div class="spinner-orbit">
+          <div class="spinner-ring"></div>
+        </div>
+        <h3 class="state-title">Analyzing this website...</h3>
+        <p class="state-desc">Checking security indicators and threat intelligence</p>
+      </div>
+
+      <!-- STATE 1: SAFE -->
+      <div id="state-safe" class="state-view" style="display: none;">
+        <div class="status-banner banner-safe">
+          <span class="status-icon">✓</span>
+          <div>
+            <div class="status-headline">SAFE</div>
+            <div class="status-subline">No significant threats detected.</div>
+          </div>
+        </div>
+        <p class="safe-note">This website appears legitimate based on current indicators.</p>
+      </div>
+
+      <!-- STATE 3: SUSPICIOUS (MEDIUM) -->
+      <div id="state-suspicious" class="state-view" style="display: none;">
+        <div class="status-banner banner-warning">
+          <span class="status-icon">⚠</span>
+          <div>
+            <div class="status-headline">SUSPICIOUS</div>
+            <div class="status-subline">Potential threat indicators observed.</div>
+          </div>
+        </div>
+        <p class="warning-note">ORION found some indicators that deserve attention before submitting data.</p>
+      </div>
+
+      <!-- STATE 4 & 5: HIGH / CRITICAL RISK -->
+      <div id="state-danger" class="state-view" style="display: none;">
+        <div id="danger-banner" class="status-banner banner-danger">
+          <span class="status-icon">🚨</span>
+          <div>
+            <div id="danger-headline" class="status-headline">HIGH RISK</div>
+            <div id="danger-subline" class="status-subline">Potential phishing website</div>
+          </div>
+        </div>
+        <div class="danger-warning-box">
+          <div id="danger-warning-message" class="danger-warning-text">
+            This website may be attempting to steal sensitive credentials. Do not enter passwords or payment information.
+          </div>
+          <ul id="danger-flags-list" class="danger-flags-list">
+            <!-- Dynamic flags populated via JS -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- STATE 6: UNAVAILABLE / ERROR -->
+      <div id="state-unavailable" class="state-view" style="display: none;">
+        <div class="status-banner banner-offline">
+          <span class="status-icon">✕</span>
+          <div>
+            <div class="status-headline">UNAVAILABLE</div>
+            <div class="status-subline">Could not analyze this page.</div>
+          </div>
+        </div>
+        <p class="offline-note">The ORION security service is currently unreachable.</p>
+        <button id="retry-btn" class="btn btn-secondary">Retry Analysis</button>
+      </div>
+    </main>
+
+    <!-- Collapsible Details Section -->
+    <section id="details-section" class="details-section" style="display: none;">
+      <div class="details-header">
+        <span class="details-label">ANALYSIS DETAILS</span>
+        <span id="risk-score-display" class="risk-score-pill">0.00</span>
+      </div>
+      <div class="details-content">
+        <div class="detail-row">
+          <span class="detail-name">Primary Threat</span>
+          <span id="detail-threat-type" class="detail-value">None</span>
+        </div>
+        <ul id="detail-evidence-list" class="evidence-list">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="actions-group">
+      <button id="toggle-details-btn" class="btn btn-ghost" style="display: none;">
+        View Details
+      </button>
+      <a id="investigate-btn" href="#" target="_blank" class="btn btn-primary" style="display: none;">
+        Investigate in ORION
+      </a>
+      <button id="go-back-btn" class="btn btn-danger-action" style="display: none;">
+        Go Back (Leave Site)
+      </button>
+      <a id="open-dashboard-btn" href="#" target="_blank" class="btn btn-outline">
+        Open ORION Dashboard
+      </a>
+    </div>
+
+    <!-- Recent Analyses -->
+    <section id="recent-section" class="recent-section" style="display: none;">
+      <div class="recent-label">RECENT SITES ANALYZED</div>
+      <ul id="recent-list" class="recent-list">
+        <!-- Populated dynamically -->
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="shield-footer">
+      <span>ORION Security Platform • Browser Shield</span>
+    </footer>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
